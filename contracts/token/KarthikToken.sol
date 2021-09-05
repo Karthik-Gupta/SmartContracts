@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     uint tokenId;
-    uint counter;
     
     struct TokenMetadata {
         uint timestamp;
@@ -15,7 +14,6 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     }
     
     mapping(address => TokenMetadata[]) tokenOwnership;
-    TokenMetadata[] tokenMetadataArray;
     
     function getTokenOwnership(address _user) public view returns (TokenMetadata[] memory) {
         return tokenOwnership[_user];
@@ -25,40 +23,25 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
         return tokenId++;
     }
     
-    function incrCounter() internal returns (uint) {
-        return ++counter;
-    }
-    
     function _baseURI() internal view virtual override returns (string memory) {
         return "KarthikToken/base/";
     }
     
-    function mintToken(uint _tokenId) public {
+    function mintToken() public returns (uint) {
+        uint _tokenId = incrToken();
         _safeMint(msg.sender, _tokenId);
         
-        TokenMetadata memory data = TokenMetadata(block.timestamp, _tokenId, string(abi.encodePacked("random uri ", Strings.toString(incrCounter()))));
+        TokenMetadata memory data = TokenMetadata(block.timestamp, _tokenId, string(abi.encodePacked("random uri ", Strings.toString(_tokenId))));
         
-        tokenMetadataArray.push(data);
         tokenOwnership[msg.sender].push(data);
         
-        incrToken();
+        return _tokenId;
     }
     
     function burnToken(uint _tokenId) public {
         require(ownerOf(_tokenId) == msg.sender, "You are not permitted with this operation!");
         _burn(_tokenId);
-        _removeBurnedTokenMetadata(_tokenId);
         _removeBurnedTokenFromOwnership(_tokenId, msg.sender);
-    }
-    
-    function _removeBurnedTokenMetadata(uint _tokenId) internal returns (bool) {
-        for(uint i=0; i<tokenMetadataArray.length; i++) {
-            if (tokenMetadataArray[i].tokenId == _tokenId) {
-                delete tokenMetadataArray[i];
-                return true;
-            }
-        }
-        return false;
     }
     
     function _removeBurnedTokenFromOwnership(uint _tokenId, address _tokenOwner) internal returns (bool) {
