@@ -13,8 +13,6 @@ contract GasContract is Ownable {
 
     mapping(address => uint256) balances;
     mapping(address => Payment[]) payments;
-    //mapping(address=>uint256) lastUpdateRecord; // when a payment record was last for a user   
-
 
     struct Payment {
       uint128 paymentID;
@@ -22,8 +20,6 @@ contract GasContract is Ownable {
       PaymentType paymentType;
       address recipient;
       string recipientName;  // max 12 characters
-      //uint256 lastUpdate;
-      //address updatedBy;
     }
 
     modifier onlyAdmin {
@@ -88,10 +84,7 @@ contract GasContract is Ownable {
         uint length = payments[_user].length;
         for (uint256 ii=0;ii<length;ii++){
             if(payments[_user][ii].paymentID==_ID){
-               //payments[_user][ii].lastUpdate =  block.timestamp;
-               //payments[_user][ii].updatedBy = msg.sender;
                payments[_user][ii].amount = _amount;
-               //lastUpdateRecord[msg.sender] = block.timestamp;
                emit PaymentUpdated(msg.sender, _ID, _amount,payments[_user][ii].recipientName);
                break;
             }
