@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract KarthikCoin is Ownable, ERC20("Karthik Gupta Coin", "KGC") {
-    //using Strings for string;
     uint private id;
     address private admin;
     
