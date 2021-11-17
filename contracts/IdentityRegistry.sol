@@ -49,7 +49,7 @@ contract IdentityRegistry {
     function rejectDocument(bytes32 _docHash) 
     public
     onlyBy(owner) 
-    returns(bool) 
+    returns(bool rejected) 
     {
         IDocument storage idocument = idocuments[_docHash];
         idocument.status = REJECTED;
