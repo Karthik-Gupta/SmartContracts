@@ -27,7 +27,7 @@ contract IdentityRegistry {
 
     function submitDocument(bytes32 _docHash) 
     public
-    returns(bool) 
+    returns(bool submitted) 
     {
         IDocument storage idocument = idocuments[_docHash];
         idocument.docHash = _docHash;
