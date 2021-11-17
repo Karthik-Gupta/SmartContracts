@@ -39,7 +39,7 @@ contract IdentityRegistry {
     function approveDocument(bytes32 _docHash) 
     public
     onlyBy(owner) 
-    returns(bool) 
+    returns(bool approved) 
     {
         IDocument storage idocument = idocuments[_docHash];
         idocument.status = ACTIVE;
