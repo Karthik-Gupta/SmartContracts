@@ -26,7 +26,7 @@ contract VolcanoCoin {
         balances[owner] = totalSupply;
     }
 
-    function getTotalSupply() public view returns(uint) {
+    function getTotalSupply() public view returns(uint supply) {
         return totalSupply;
     }
 
