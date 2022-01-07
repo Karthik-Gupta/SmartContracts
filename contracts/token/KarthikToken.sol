@@ -15,15 +15,25 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     
     mapping(address => TokenMetadata[]) tokenOwnership;
     
-    function getTokenOwnership(address _user) public view returns (TokenMetadata[] memory) {
+    function getTokenOwnership(address _user) 
+    public 
+    view 
+    returns (TokenMetadata[] memory) {
         return tokenOwnership[_user];
     }
     
-    function incrToken() internal returns (uint) {
+    function incrToken() 
+    internal 
+    returns (uint) {
         return tokenId++;
     }
     
-    function _baseURI() internal view virtual override returns (string memory) {
+    function _baseURI() 
+    internal 
+    view 
+    virtual 
+    override 
+    returns (string memory) {
         return "KarthikToken/base/";
     }
     
