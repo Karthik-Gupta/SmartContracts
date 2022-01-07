@@ -18,13 +18,15 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     function getTokenOwnership(address _user) 
     public 
     view 
-    returns (TokenMetadata[] memory) {
+    returns (TokenMetadata[] memory) 
+    {
         return tokenOwnership[_user];
     }
     
     function incrToken() 
     internal 
-    returns (uint) {
+    returns (uint) 
+    {
         return tokenId++;
     }
     
@@ -33,13 +35,15 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     view 
     virtual 
     override 
-    returns (string memory) {
+    returns (string memory) 
+    {
         return "KarthikToken/base/";
     }
     
     function mintToken() 
     public 
-    returns (uint) {
+    returns (uint) 
+    {
         uint _tokenId = incrToken();
         _safeMint(msg.sender, _tokenId);
         
@@ -51,7 +55,8 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     }
     
     function burnToken(uint _tokenId) 
-    public {
+    public 
+    {
         require(ownerOf(_tokenId) == msg.sender, "You are not permitted with this operation!");
         _burn(_tokenId);
         _removeBurnedTokenFromOwnership(_tokenId, msg.sender);
@@ -59,7 +64,8 @@ contract KarthikToken is Ownable, ERC721("Karthik Gupta Token", "KGT") {
     
     function _removeBurnedTokenFromOwnership(uint _tokenId, address _tokenOwner) 
     internal 
-    returns (bool) {
+    returns (bool) 
+    {
         for(uint i=0; i<tokenOwnership[_tokenOwner].length; i++) {
             if (tokenOwnership[_tokenOwner][i].tokenId == _tokenId) {
                 delete tokenOwnership[_tokenOwner][i];
